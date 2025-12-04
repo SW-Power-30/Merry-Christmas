@@ -4,10 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spinner</title>
+<title>Roulette Spinner</title>
 <style>
   body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -25,6 +26,7 @@
     border-radius: 50%;
     background: #ffffffcc; /* Slightly transparent background */
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    transform: rotate(0deg);
   }
 
   .pointer {
@@ -74,7 +76,7 @@ function drawSpinner() {
     for (let i = 0; i < numWedges; i++) {
         ctx.beginPath();
         ctx.moveTo(center, center);
-        ctx.arc(center, center, center - 10, i * wedgeAngle + rotation, (i+1) * wedgeAngle + rotation);
+        ctx.arc(center, center, center - 10, i * wedgeAngle, (i+1) * wedgeAngle);
         ctx.closePath();
         ctx.fillStyle = wedgeColors[i % wedgeColors.length];
         ctx.fill();
@@ -85,7 +87,7 @@ function drawSpinner() {
         // Add label
         ctx.save();
         ctx.translate(center, center);
-        ctx.rotate(i * wedgeAngle + wedgeAngle/2 + rotation);
+        ctx.rotate(i * wedgeAngle + wedgeAngle/2);
         ctx.textAlign = "right";
         ctx.fillStyle = "#000";
         ctx.font = "16px Arial";
@@ -94,14 +96,15 @@ function drawSpinner() {
     }
 }
 
+// Initial draw
 drawSpinner();
 
 // Spin function
 function spin() {
-    const spins = Math.floor(Math.random() * 4) + 4; // 4-7 rotations
+    const spins = Math.floor(Math.random() * 4) + 4; // 4-7 full rotations
     const randomWedge = Math.floor(Math.random() * numWedges);
     const wedgeAngle = 2 * Math.PI / numWedges;
-    const targetRotation = 2 * Math.PI * spins - randomWedge * wedgeAngle - wedgeAngle/2;
+    const targetRotation = 2 * Math.PI * spins + randomWedge * wedgeAngle + wedgeAngle / 2;
 
     let start = null;
     function animate(timestamp) {
@@ -110,13 +113,14 @@ function spin() {
         const duration = 4000; // 4 seconds
         const easedProgress = easeOutCubic(progress / duration);
         rotation = targetRotation * easedProgress;
-        drawSpinner();
+        canvas.style.transform = `rotate(${rotation}rad)`;
         if (progress < duration) {
             requestAnimationFrame(animate);
         } else {
             rotation = targetRotation;
-            drawSpinner();
-            alert("Landed on wedge: " + wedgeLabels[randomWedge]);
+            canvas.style.transform = `rotate(${rotation}rad)`;
+            const landedWedge = (numWedges - randomWedge) % numWedges;
+            alert("Landed on wedge: " + wedgeLabels[landedWedge]);
         }
     }
     requestAnimationFrame(animate);
@@ -130,4 +134,5 @@ function easeOutCubic(t) {
 
 </body>
 </html>
+
 
