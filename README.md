@@ -162,11 +162,9 @@ const prizes = [
     {name: "Prize D", description: "A gaming mouse", image: "https://via.placeholder.com/150?text=Prize+D"},
     {name: "Prize E", description: "A coffee maker", image: "https://via.placeholder.com/150?text=Prize+E"},
     {name: "Prize F", description: "A book bundle", image: "https://via.placeholder.com/150?text=Prize+F"},
-    {name: "Prize G", description: "A backpack", image: "https://via.placeholder.com/150?text=Prize+G"},
-    {name: "Prize H", description: "A mystery box", image: "https://via.placeholder.com/150?text=Prize+H"}
 ];
 
-const wedgeColors = ["#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#FF33F3", "#33FFF3", "#F39C12", "#8E44AD"];
+const wedgeColors = ["#90EE90", "#FF7F7F", "#90EE90", "#FF7F7F", "#90EE90", "##FF7F7F"];
 const numWedges = prizes.length;
 
 // Draw spinner
