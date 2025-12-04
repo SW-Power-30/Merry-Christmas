@@ -49,20 +49,22 @@
     }
     .slice {
       position: absolute;
-      width: 50%;
-      height: 50%;
-      top: 50%;
-      left: 50%;
-      transform-origin: 0% 0%;
-      background: #eee;
-      border: 1px solid #ccc;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
+      transform-origin: 50% 50%;
+      background-color: white;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+      padding-left: 50%;
       font-size: 14px;
       text-align: center;
-      padding: 4px;
-      clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
+      box-sizing: border-box;
+      border: 1px solid #ccc;
     }
     #pointer {
       width: 0;
@@ -140,5 +142,3 @@
   </script>
 </body>
 </html>
-
-
