@@ -119,35 +119,43 @@
       { label: "Prize F", details: "Prize F: A tech gadget!" }
     ];
 
-    const wheel = document.getElementById("wheel");
-    const result = document.getElementById("result");
 
-    const numSlices = prizes.length;
-    const sliceAngle = 360 / numSlices;
+const wheel = document.getElementById("wheel");
+const pointer = document.getElementById("pointer");
+const result = document.getElementById("result");
 
-    prizes.forEach((prize, index) => {
-      const slice = document.createElement("div");
-      slice.className = "slice";
-      slice.style.transform = `rotate(${sliceAngle * index}deg) skewY(${90 - sliceAngle}deg)`;
-      slice.textContent = prize.label;
-      wheel.appendChild(slice);
-    });
 
-    let currentRotation = 0;
+const numSlices = prizes.length;
+const sliceAngle = 360 / numSlices;
 
-    document.getElementById("spinBtn").addEventListener("click", () => {
-      const spinAmount = Math.floor(Math.random() * 360) + 720; // spin at least 2 full rotations
-      currentRotation += spinAmount;
-      wheel.style.transform = `rotate(${currentRotation}deg)`;
 
-      setTimeout(() => {
-        const normalized = currentRotation % 360;
-        const index = Math.floor((numSlices - normalized / sliceAngle) % numSlices);
-        const selectedPrize = prizes[index];
-        result.textContent = `Result: ${selectedPrize.details}`;
-      }, 4200);
-    });
-  </script>
+prizes.forEach((prize, index) => {
+const slice = document.createElement("div");
+slice.className = "slice";
+slice.style.transform = `rotate(${sliceAngle * index}deg) skewY(${90 - sliceAngle}deg)`;
+slice.textContent = prize.label;
+wheel.appendChild(slice);
+});
+
+
+let currentRotation = 0;
+
+
+document.getElementById("spinBtn").addEventListener("click", () => {
+const spinAmount = Math.floor(Math.random() * 360) + 720;
+currentRotation += spinAmount;
+wheel.style.transform = `rotate(${currentRotation}deg)`;
+pointer.style.transform = `translate(-50%, -50%) rotate(${-currentRotation}deg)`;
+
+
+setTimeout(() => {
+const normalized = currentRotation % 360;
+const index = Math.floor((numSlices - normalized / sliceAngle) % numSlices);
+const selectedPrize = prizes[index];
+result.textContent = `Result: ${selectedPrize.details}`;
+}, 4200);
+});
+</script>
 </body>
 </html>
 
