@@ -102,10 +102,12 @@
   </style>
 </head>
 <body>
-  <div id="pointer"></div>
-  <div id="wheel"></div>
-  <button id="spinBtn">SPIN</button>
-  <div id="result"></div>
+    <div id="wheel-container">
+    <div id="wheel"></div>
+    <div id="pointer"></div>
+    </div>
+    <button id="spinBtn">SPIN</button>
+    <div id="result"></div>
 
   <script>
     const prizes = [
