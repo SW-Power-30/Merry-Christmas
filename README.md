@@ -4,16 +4,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Spinner with Rich Prize Details</title>
+<title>Roulette Spinner with Background</title>
 <style>
   body {
+    margin: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background: #f5f5f5;
     font-family: Arial, sans-serif;
+    background: #000; /* fallback background color */
+  }
+
+  /* Background container */
+  .background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://via.placeholder.com/800x600') no-repeat center center;
+    background-size: cover;
+    z-index: -2;
+  }
+
+  /* Dim overlay to control brightness */
+  .background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4); /* Change alpha to dim more or less */
+    z-index: -1;
   }
 
   .spinner-container {
@@ -24,7 +48,7 @@
 
   canvas {
     border-radius: 50%;
-    background: #ffffffcc;
+    background: #ffffffcc; /* slightly transparent spinner background */
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     transform: rotate(0deg);
   }
@@ -76,6 +100,10 @@
 </style>
 </head>
 <body>
+
+<!-- Background and overlay -->
+<div class="background-container"></div>
+<div class="background-overlay"></div>
 
 <div class="spinner-container">
   <canvas id="spinner" width="400" height="400"></canvas>
@@ -147,7 +175,7 @@ drawSpinner();
 
 // Spin function
 function spin() {
-    popup.style.display = "none"; // hide popup
+    popup.style.display = "none";
     const spins = Math.floor(Math.random() * 4) + 4; 
     const randomWedge = Math.floor(Math.random() * numWedges);
     const wedgeAngle = 2 * Math.PI / numWedges;
@@ -194,5 +222,6 @@ function easeOutCubic(t) {
 
 </body>
 </html>
+
 
 
