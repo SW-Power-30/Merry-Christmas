@@ -6,27 +6,46 @@
   
   <style>
     body {
-      background-image: url('https://clipart-library.com/newimages/christmas-images-28.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 40px;
-    }
-    #wheel {
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      border: 8px solid #333;
-      position: relative;
-      overflow: hidden;
-      transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
-    }
+       font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+        background-image: url('https://clipart-library.com/newimages/christmas-images-28.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: inherit;
+        background-size: inherit;
+        background-position: inherit;
+        background-repeat: inherit;
+        opacity: 0.1;
+        z-index: -1;
+      }
+      #wheel-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        margin-bottom: 20px;
+      }
+      #wheel {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 8px solid #333;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      }
     .slice {
       position: absolute;
       width: 50%;
@@ -72,7 +91,7 @@
       background-size: inherit;
       background-position: inherit;
       background-repeat: inherit;
-      opacity: 0.3;
+      opacity: 0.1;
       z-index: -1;
    }
   </style>
