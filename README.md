@@ -4,20 +4,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Spinner with Background</title>
+<title>Roulette Spinner with Scalable Background</title>
 <style>
-  body {
+  html, body {
     margin: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 0;
+    height: 100%;
+    width: 100%;
     font-family: Arial, sans-serif;
-    background: #000; /* fallback background color */
+    overflow: hidden;
   }
 
-  /* Background container */
+  /* Background container that scales */
   .background-container {
     position: fixed;
     top: 0;
@@ -25,18 +23,18 @@
     width: 100%;
     height: 100%;
     background: url('https://as2.ftcdn.net/v2/jpg/06/36/18/21/1000_F_636182143_mGhPRnv13Ur0JwFbyOzpEDvKajxv7iv8.jpg') no-repeat center center;
-    background-size: cover;
+    background-size: cover; /* scales image to cover viewport */
     z-index: -2;
   }
 
-  /* Dim overlay to control brightness */
+  /* Dim overlay to adjust brightness */
   .background-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.4); /* Change alpha to dim more or less */
+    background: rgba(0,0,0,0.4); /* adjust alpha to dim more or less */
     z-index: -1;
   }
 
@@ -48,7 +46,7 @@
 
   canvas {
     border-radius: 50%;
-    background: #ffffffcc; /* slightly transparent spinner background */
+    background: #ffffffcc;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     transform: rotate(0deg);
   }
@@ -97,11 +95,31 @@
     font-size: 16px;
     margin-top: 5px;
   }
+
+  /* Make spinner responsive */
+  @media (max-width: 500px) {
+    .spinner-container {
+      width: 300px;
+      height: 300px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .pointer {
+      transform: translate(-50%, -145px); /* adjust for smaller spinner */
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 25px solid red;
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- Background and overlay -->
+<!-- Background -->
 <div class="background-container"></div>
 <div class="background-overlay"></div>
 
@@ -124,10 +142,19 @@ const popup = document.getElementById('prizePopup');
 const prizeNameEl = popup.querySelector('.prize-name');
 const prizeDescEl = popup.querySelector('.prize-description');
 const prizeImgEl = popup.querySelector('.prize-image');
-const size = canvas.width;
-const center = size / 2;
+let rotation = 0;
 
-// Define rich prize details
+// Responsive canvas resizing
+function resizeCanvas() {
+    const container = document.querySelector('.spinner-container');
+    const rect = container.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    drawSpinner();
+}
+window.addEventListener('resize', resizeCanvas);
+
+// Prizes
 const prizes = [
     {name: "Prize A", description: "A $50 gift card", image: "https://via.placeholder.com/150?text=Prize+A"},
     {name: "Prize B", description: "A new headphones set", image: "https://via.placeholder.com/150?text=Prize+B"},
@@ -141,13 +168,14 @@ const prizes = [
 
 const wedgeColors = ["#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#FF33F3", "#33FFF3", "#F39C12", "#8E44AD"];
 const numWedges = prizes.length;
-let rotation = 0;
 
 // Draw spinner
 function drawSpinner() {
-    ctx.clearRect(0,0,size,size);
+    const size = canvas.width;
+    const center = size / 2;
+    ctx.clearRect(0, 0, size, size);
     const wedgeAngle = (2 * Math.PI) / numWedges;
-    
+
     for (let i = 0; i < numWedges; i++) {
         ctx.beginPath();
         ctx.moveTo(center, center);
@@ -155,7 +183,7 @@ function drawSpinner() {
         ctx.closePath();
         ctx.fillStyle = wedgeColors[i % wedgeColors.length];
         ctx.fill();
-        ctx.strokeStyle = "#000000";
+        ctx.strokeStyle = "#000";
         ctx.lineWidth = 2;
         ctx.stroke();
 
@@ -165,13 +193,14 @@ function drawSpinner() {
         ctx.rotate(i * wedgeAngle + wedgeAngle/2);
         ctx.textAlign = "right";
         ctx.fillStyle = "#000";
-        ctx.font = "16px Arial";
+        ctx.font = `${Math.floor(size/25)}px Arial`;
         ctx.fillText(prizes[i].name, center - 30, 5);
         ctx.restore();
     }
 }
 
-drawSpinner();
+// Initial draw and responsive
+resizeCanvas();
 
 // Spin function
 function spin() {
@@ -201,7 +230,7 @@ function spin() {
     requestAnimationFrame(animate);
 }
 
-// Show rich prize details
+// Show prize
 function showPrize(prize) {
     prizeNameEl.textContent = prize.name;
     prizeDescEl.textContent = prize.description || "";
@@ -214,7 +243,7 @@ function showPrize(prize) {
     popup.style.display = "block";
 }
 
-// Easing function
+// Easing
 function easeOutCubic(t) {
     return (--t)*t*t+1;
 }
