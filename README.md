@@ -13,7 +13,7 @@
   /* Scalable background */
   .background-container{
     position:fixed; inset:0;
-    background:url('https://media.istockphoto.com/id/1804975122/photo/green-christmas-background-with-fir-branches-and-decorations.jpg?s=2048x2048&w=is&k=20&c=Fz-bRZ3E6qJX9qRbkZUnOqScyLVKufEgG1TznA-Puv4=') no-repeat center center/cover;
+    background:url('https://cdn.stocksnap.io/img-thumbs/960w/seasonal-backgrounds_QQA4QVER48.jpg') no-repeat center center/cover;
     z-index:-2;
   }
   .background-overlay{
