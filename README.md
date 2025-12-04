@@ -1,11 +1,16 @@
 # Merry-Christmas
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <style>
+    body {
+      background-image: url('https://clipart-library.com/newimages/christmas-images-28.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
     body {
       font-family: Arial, sans-serif;
       display: flex;
