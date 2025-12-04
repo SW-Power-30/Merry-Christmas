@@ -24,7 +24,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://via.placeholder.com/800x600') no-repeat center center;
+    background: url('https://pngtree.com/freebackground/christmas-background-with-sparkling-lights-and-holiday-decorations_15952147.html') no-repeat center center;
     background-size: cover;
     z-index: -2;
   }
