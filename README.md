@@ -27,7 +27,7 @@
       background-size: inherit;
       background-position: inherit;
       background-repeat: inherit;
-      opacity: 0.3;
+      opacity: 0.1;
       z-index: -1;
     }
     #wheel-container {
@@ -62,10 +62,10 @@
       align-items: center;
       justify-content: flex-start;
       padding-left: 50%;
-      font-size: 10px;
+      font-size: 14px;
       text-align: center;
       box-sizing: border-box;
-      border-right: 2px solid #333; /* defined line for each wedge */
+      border-right: 2px solid black; /* line to define each wedge */
     }
     #pointer {
       width: 0;
