@@ -1,10 +1,10 @@
 # Merry-Christmas
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roulette Spinner with Prize Details</title>
+<title>Roulette Spinner with Rich Prize Details</title>
 <style>
   body {
     display: flex;
@@ -51,7 +51,7 @@
 
   .prize-popup {
     margin-top: 20px;
-    padding: 15px 25px;
+    padding: 20px;
     background: #ffd700;
     border-radius: 10px;
     font-size: 18px;
@@ -59,6 +59,19 @@
     display: none;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     text-align: center;
+    max-width: 300px;
+  }
+
+  .prize-popup img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+
+  .prize-description {
+    font-weight: normal;
+    font-size: 16px;
+    margin-top: 5px;
   }
 </style>
 </head>
@@ -70,31 +83,39 @@
 </div>
 <button onclick="spin()">Spin</button>
 
-<div class="prize-popup" id="prizePopup"></div>
+<div class="prize-popup" id="prizePopup">
+  <div class="prize-name"></div>
+  <div class="prize-description"></div>
+  <img class="prize-image" src="" alt="" />
+</div>
 
 <script>
 const canvas = document.getElementById('spinner');
 const ctx = canvas.getContext('2d');
 const popup = document.getElementById('prizePopup');
+const prizeNameEl = popup.querySelector('.prize-name');
+const prizeDescEl = popup.querySelector('.prize-description');
+const prizeImgEl = popup.querySelector('.prize-image');
 const size = canvas.width;
 const center = size / 2;
 
-// Customize wedge text here
-const wedgeLabels = [
-    "Prize A", 
-    "Prize B", 
-    "Prize C", 
-    "Prize D", 
-    "Prize E", 
-    "Prize F", 
-    "Prize G", 
-    "Prize H"
+// Define rich prize details
+const prizes = [
+    {name: "Prize A", description: "A $50 gift card", image: "https://via.placeholder.com/150?text=Prize+A"},
+    {name: "Prize B", description: "A new headphones set", image: "https://via.placeholder.com/150?text=Prize+B"},
+    {name: "Prize C", description: "A smartwatch", image: "https://via.placeholder.com/150?text=Prize+C"},
+    {name: "Prize D", description: "A gaming mouse", image: "https://via.placeholder.com/150?text=Prize+D"},
+    {name: "Prize E", description: "A coffee maker", image: "https://via.placeholder.com/150?text=Prize+E"},
+    {name: "Prize F", description: "A book bundle", image: "https://via.placeholder.com/150?text=Prize+F"},
+    {name: "Prize G", description: "A backpack", image: "https://via.placeholder.com/150?text=Prize+G"},
+    {name: "Prize H", description: "A mystery box", image: "https://via.placeholder.com/150?text=Prize+H"}
 ];
+
 const wedgeColors = ["#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#FF33F3", "#33FFF3", "#F39C12", "#8E44AD"];
-const numWedges = wedgeLabels.length;
+const numWedges = prizes.length;
 let rotation = 0;
 
-// Draw spinner with text
+// Draw spinner
 function drawSpinner() {
     ctx.clearRect(0,0,size,size);
     const wedgeAngle = (2 * Math.PI) / numWedges;
@@ -110,14 +131,14 @@ function drawSpinner() {
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Add text
+        // Add wedge text
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(i * wedgeAngle + wedgeAngle/2);
         ctx.textAlign = "right";
         ctx.fillStyle = "#000";
         ctx.font = "16px Arial";
-        ctx.fillText(wedgeLabels[i], center - 30, 5);
+        ctx.fillText(prizes[i].name, center - 30, 5);
         ctx.restore();
     }
 }
@@ -146,15 +167,22 @@ function spin() {
             rotation = targetRotation;
             canvas.style.transform = `rotate(${rotation}rad)`;
             const landedIndex = (numWedges - randomWedge) % numWedges;
-            showPrize(wedgeLabels[landedIndex]);
+            showPrize(prizes[landedIndex]);
         }
     }
     requestAnimationFrame(animate);
 }
 
-// Show prize details
-function showPrize(text) {
-    popup.textContent = `You won: ${text}!`;
+// Show rich prize details
+function showPrize(prize) {
+    prizeNameEl.textContent = prize.name;
+    prizeDescEl.textContent = prize.description || "";
+    if (prize.image) {
+        prizeImgEl.src = prize.image;
+        prizeImgEl.style.display = "block";
+    } else {
+        prizeImgEl.style.display = "none";
+    }
     popup.style.display = "block";
 }
 
@@ -163,9 +191,6 @@ function easeOutCubic(t) {
     return (--t)*t*t+1;
 }
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
