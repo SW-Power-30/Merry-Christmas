@@ -63,9 +63,9 @@
       justify-content: flex-start;
       padding-left: 50%;
       font-size: 14px;
-      text-align: center;
+      text-align: middle;
       box-sizing: border-box;
-      border-right: 2px solid black; /* line to define each wedge */
+      border-right: 5px solid black; /* line to define each wedge */
     }
     #pointer {
       width: 0;
