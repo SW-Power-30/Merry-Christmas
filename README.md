@@ -24,7 +24,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://pngtree.com/freebackground/christmas-background-with-sparkling-lights-and-holiday-decorations_15952147.html') no-repeat center center;
+    background: url('https://as2.ftcdn.net/v2/jpg/06/36/18/21/1000_F_636182143_mGhPRnv13Ur0JwFbyOzpEDvKajxv7iv8.jpg') no-repeat center center;
     background-size: cover;
     z-index: -2;
   }
