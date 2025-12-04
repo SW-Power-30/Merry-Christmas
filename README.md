@@ -46,6 +46,7 @@
       left: 0;
       transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
       overflow: hidden;
+      box-shadow: inset 0 0 0 1px #333;
     }
     .slice {
       position: absolute;
@@ -61,10 +62,10 @@
       align-items: center;
       justify-content: flex-start;
       padding-left: 50%;
-      font-size: 14px;
+      font-size: 10px;
       text-align: center;
       box-sizing: border-box;
-      border: 1px solid #ccc;
+      border-right: 2px solid #333; /* defined line for each wedge */
     }
     #pointer {
       width: 0;
@@ -142,3 +143,4 @@
   </script>
 </body>
 </html>
+
