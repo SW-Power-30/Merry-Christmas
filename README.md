@@ -1,10 +1,10 @@
 # Merry-Christmas
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Roulette Spinner — Accept Option</title>
+<title>Roulette Spinner — Conditional Spin</title>
 <style>
 html,body{
   margin:0; padding:0; height:100%; width:100%;
@@ -186,9 +186,6 @@ function drawWheel(){
 function spin(){
   popup.style.display = "none";
   spinBtn.disabled = true;
-  tryAgainBtn.style.display = "none";
-  acceptBtn.style.display = "none";
-  resetBtn.style.display = "none";
 
   const numWedgesNow = prizes.length;
   const wedgeAngleNow = (2*Math.PI)/numWedgesNow;
@@ -222,9 +219,11 @@ function spin(){
         firstPrize = selectedPrize;
         tryAgainBtn.style.display = "block";
         acceptBtn.style.display = "block";
+        spinBtn.style.display = "none"; // hide spin after first spin
       } else {
         // SECOND SPIN
         resetBtn.style.display = "block";
+        spinBtn.style.display = "none"; // hide spin after second spin
       }
 
       spinCount++;
@@ -251,22 +250,23 @@ tryAgainBtn.addEventListener("click", () => {
   tryAgainBtn.style.display = "none";
   acceptBtn.style.display = "none";
 
-  // Remove first prize
   const index = prizes.findIndex(p => p.name === firstPrize.name);
   if(index >= 0) prizes.splice(index, 1);
 
-  // Reset rotation for new wheel
   currentRotation = 0;
   canvas.style.transform = `rotate(0rad)`;
   drawWheel();
+
+  spinBtn.style.display = "block"; // show spin for second spin
 });
 
 // Accept: accept first prize, skip second spin
 acceptBtn.addEventListener("click", () => {
-  popup.style.display = "block"; // keep prize popup visible
+  popup.style.display = "block";
   tryAgainBtn.style.display = "none";
   acceptBtn.style.display = "none";
   resetBtn.style.display = "block";
+  spinBtn.style.display = "none";
 });
 
 // Reset: restore full wheel
@@ -281,6 +281,8 @@ resetBtn.addEventListener("click", () => {
   currentRotation = 0;
   canvas.style.transform = "rotate(0rad)";
   drawWheel();
+
+  spinBtn.style.display = "block"; // show spin after reset
 });
 
 spinBtn.addEventListener("click", spin);
