@@ -1,4 +1,4 @@
-# Merry-Christmas
+////# Merry-Christmas
 
 <html lang="en">
 <head>
@@ -93,7 +93,7 @@ button{
 <body>
 
 <!-- Title -->
-<div id="titleBox">Welcome to the Prize Wheel!</div>
+<div id="titleBox">Merry Christmas, lets have fun to determine your present!</div>
 
 <div class="background-container"></div>
 <div class="background-overlay"></div>
