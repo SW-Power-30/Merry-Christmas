@@ -4,80 +4,80 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Roulette Spinner</title>
+<title>Roulette Spinner — Accurate Pointer with Try Again & Reset</title>
 <style>
-  html,body{
-    margin:0; padding:0; height:100%; width:100%; 
-    font-family:Arial,Helvetica,sans-serif; overflow:hidden;
-  }
+html,body{
+  margin:0; padding:0; height:100%; width:100%;
+  font-family:Arial,Helvetica,sans-serif; overflow:hidden;
+}
 
-  /* Background */
-  .background-container{
-    position:fixed; inset:0;
-    background:url('https://cdn.stocksnap.io/img-thumbs/960w/christmas-garland_RFRZRPQQAI.jpg') no-repeat center center/cover;
-    z-index:-2;
-  }
-  .background-overlay{
-    position:fixed; inset:0;
-    background:rgba(0,0,0,0.4);
-    z-index:-1;
-  }
+/* Background */
+.background-container{
+  position:fixed; inset:0;
+  background:url('https://cdn.stocksnap.io/img-thumbs/960w/christmas-garland_RFRZRPQQAI.jpg') no-repeat center center/cover;
+  z-index:-2;
+}
+.background-overlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.4);
+  z-index:-1;
+}
 
-  .spinner-container{
-    position:relative;
-    width:400px; height:400px;
-    margin:30px auto;
-  }
+.spinner-container{
+  position:relative;
+  width:400px; height:400px;
+  margin:30px auto;
+}
 
-  canvas{
-    width:100%; height:100%;
-    border-radius:50%;
-    transform-origin:50% 50%;
-  }
+canvas{
+  width:100%; height:100%;
+  border-radius:50%;
+  transform-origin:50% 50%;
+}
 
-  .pointer{
-    position:absolute;
-    left:50%; top:50%;
-    transform:translate(-50%,-190px);
-    width:0; height:0;
-    border-left:15px solid transparent;
-    border-right:15px solid transparent;
-    border-bottom:35px solid #e53935;
-    z-index:10;
-  }
+.pointer{
+  position:absolute;
+  left:50%; top:50%;
+  transform:translate(-50%,-190px);
+  width:0; height:0;
+  border-left:15px solid transparent;
+  border-right:15px solid transparent;
+  border-bottom:35px solid #e53935;
+  z-index:10;
+}
 
-  button{
-    display:block;
-    margin:12px auto 0;
-    padding:12px 24px;
-    font-size:18px;
-    cursor:pointer;
-  }
+button{
+  display:block;
+  margin:12px auto 0;
+  padding:12px 24px;
+  font-size:18px;
+  cursor:pointer;
+}
 
-  #tryAgainBtn, #resetBtn {
-    display:none;
-  }
+#tryAgainBtn, #resetBtn {
+  display:none;
+}
 
-  .prize-popup{
-    width:320px;
-    margin:18px auto;
-    padding:18px;
-    background:#ffd700;
-    border-radius:12px;
-    text-align:center;
-    display:none;
-    box-shadow:0 6px 20px rgba(0,0,0,0.25);
-  }
+.prize-popup{
+  width:320px;
+  margin:18px auto;
+  padding:18px;
+  background:#ffd700;
+  border-radius:12px;
+  text-align:center;
+  display:none;
+  box-shadow:0 6px 20px rgba(0,0,0,0.25);
+}
 
-  .prize-name{ font-size:20px; font-weight:700; }
-  .prize-description{ margin-top:8px; font-size:15px; }
-  .prize-popup img{ margin-top:12px; max-width:100%; border-radius:8px; }
+.prize-name{ font-size:20px; font-weight:700; }
+.prize-description{ margin-top:8px; font-size:15px; }
+.prize-popup img{ margin-top:12px; max-width:100%; border-radius:8px; }
 
-  @media (max-width:520px){
-    .spinner-container{ width:300px; height:300px; }
-    .pointer{ transform:translate(-50%,-145px); }
-    .prize-popup{ width:90%; }
-  }
+@media (max-width:520px){
+  .spinner-container{ width:300px; height:300px; }
+  .pointer{ transform:translate(-50%,-145px); }
+  .prize-popup{ width:90%; }
+}
 </style>
 </head>
 <body>
@@ -130,7 +130,7 @@ const resetBtn = document.getElementById("resetBtn");
 let currentRotation = 0;
 let spinCount = 0; // 0 = first spin, 1 = second spin
 
-/* Resize canvas for crisp rendering */
+/* ---------- Responsive Canvas ---------- */
 function resizeCanvas(){
   const rect = container.getBoundingClientRect();
   const dpr = window.devicePixelRatio || 1;
@@ -144,15 +144,13 @@ function resizeCanvas(){
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
-/* Draw Wheel */
+/* ---------- Draw Wheel ---------- */
 function drawWheel(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-
   const cssW = canvas.width / (window.devicePixelRatio||1);
   const cssH = canvas.height / (window.devicePixelRatio||1);
   const center = { x: cssW/2, y: cssH/2 };
   const radius = Math.min(cssW, cssH)/2 - 6;
-
   const numWedges = prizes.length;
   const wedgeAngle = (2*Math.PI)/numWedges;
 
@@ -182,19 +180,20 @@ function drawWheel(){
   }
 }
 
-/* Spin Wheel */
+/* ---------- Spin Function ---------- */
 function spin(){
   popup.style.display = "none";
   spinBtn.disabled = true;
   tryAgainBtn.style.display = "none";
   resetBtn.style.display = "none";
 
-  const numWedges = prizes.length;
-  const wedgeAngle = (2*Math.PI)/numWedges;
-  const chosenIndex = Math.floor(Math.random()*numWedges);
+  const numWedgesNow = prizes.length;
+  const wedgeAngleNow = (2*Math.PI)/numWedgesNow;
+  const chosenIndex = Math.floor(Math.random()*numWedgesNow);
 
   const extraSpins = Math.floor(Math.random()*3) + 4;
-  const wedgeCenter = chosenIndex * wedgeAngle + wedgeAngle/2;
+  const wedgeCenter = chosenIndex * wedgeAngleNow + wedgeAngleNow/2;
+  // rotation so wedgeCenter aligns at 12 o'clock
   const targetRotation = extraSpins*2*Math.PI + (-Math.PI/2 - wedgeCenter);
 
   const startRotation = currentRotation;
@@ -213,17 +212,16 @@ function spin(){
       requestAnimationFrame(animate);
     } else {
       currentRotation = endRotation % (2*Math.PI);
-
       const selectedPrize = prizes[chosenIndex];
       showPrize(selectedPrize);
 
       if(spinCount === 0){
-        // FIRST SPIN → remove prize from wheel
+        // FIRST SPIN → remove selected prize
         prizes.splice(chosenIndex, 1);
         drawWheel();
         tryAgainBtn.style.display = "block";
       } else {
-        // SECOND SPIN → do not remove
+        // SECOND SPIN → do not remove prize
         resetBtn.style.display = "block";
       }
 
@@ -234,7 +232,7 @@ function spin(){
   requestAnimationFrame(animate);
 }
 
-/* Show Popup */
+/* ---------- Show Prize ---------- */
 function showPrize(prize){
   prizeNameEl.textContent = prize.name;
   prizeDescEl.textContent = prize.description;
@@ -243,13 +241,12 @@ function showPrize(prize){
   popup.style.display = "block";
 }
 
-/* Try Again */
+/* ---------- Buttons ---------- */
 tryAgainBtn.addEventListener("click", () => {
   popup.style.display = "none";
   tryAgainBtn.style.display = "none";
 });
 
-/* Reset Everything */
 resetBtn.addEventListener("click", () => {
   prizes = JSON.parse(JSON.stringify(ORIGINAL_PRIZES));
   spinCount = 0;
@@ -263,8 +260,10 @@ resetBtn.addEventListener("click", () => {
 
 spinBtn.addEventListener("click", spin);
 
+/* ---------- Easing ---------- */
 function easeOutCubic(t){ return (--t)*t*t + 1; }
 
 </script>
 </body>
 </html>
+
