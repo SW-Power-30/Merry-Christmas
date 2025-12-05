@@ -23,6 +23,16 @@ html,body{
   z-index:-1;
 }
 
+/* Title Box */
+#titleBox {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-top: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
 .spinner-container{
   position:relative;
   width:400px; height:400px;
