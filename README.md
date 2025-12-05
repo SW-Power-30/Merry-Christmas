@@ -93,7 +93,7 @@ button{
 <body>
 
 <!-- Title -->
-<div id="titleBox">Merry Christmas, lets have fun to determine your present!</div>
+<div id="titleBox">Game Time, Lets have fun to determine your present!</div>
 
 <div class="background-container"></div>
 <div class="background-overlay"></div>
