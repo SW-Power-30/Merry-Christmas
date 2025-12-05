@@ -92,6 +92,9 @@ button{
 </head>
 <body>
 
+<!-- Title -->
+<div id="titleBox">Welcome to the Prize Wheel!</div>
+
 <div class="background-container"></div>
 <div class="background-overlay"></div>
 
