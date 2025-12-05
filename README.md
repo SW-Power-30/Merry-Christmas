@@ -1,10 +1,10 @@
 # Merry-Christmas
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Roulette Spinner — Accurate Pointer with Try Again & Reset</title>
+<title>Roulette Spinner — Fixed Pointer Alignment</title>
 <style>
 html,body{
   margin:0; padding:0; height:100%; width:100%;
@@ -112,7 +112,6 @@ const ORIGINAL_PRIZES = [
 ];
 
 let prizes = JSON.parse(JSON.stringify(ORIGINAL_PRIZES));
-
 const wedgeColors = ["#90EE90","#FF7F7F","#90EE90","#FF7F7F","#90EE90","#FF7F7F"];
 
 const canvas = document.getElementById("spinner");
@@ -193,7 +192,6 @@ function spin(){
 
   const extraSpins = Math.floor(Math.random()*3) + 4;
   const wedgeCenter = chosenIndex * wedgeAngleNow + wedgeAngleNow/2;
-  // rotation so wedgeCenter aligns at 12 o'clock
   const targetRotation = extraSpins*2*Math.PI + (-Math.PI/2 - wedgeCenter);
 
   const startRotation = currentRotation;
@@ -245,6 +243,10 @@ function showPrize(prize){
 tryAgainBtn.addEventListener("click", () => {
   popup.style.display = "none";
   tryAgainBtn.style.display = "none";
+
+  // RESET rotation for new wheel to align correctly
+  currentRotation = 0;
+  canvas.style.transform = `rotate(0rad)`;
 });
 
 resetBtn.addEventListener("click", () => {
@@ -266,5 +268,4 @@ function easeOutCubic(t){ return (--t)*t*t + 1; }
 </script>
 </body>
 </html>
-
 
