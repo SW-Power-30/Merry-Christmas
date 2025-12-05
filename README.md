@@ -116,12 +116,12 @@ button{
 <script>
 /* ---------- Original Prize List ---------- */
 const ORIGINAL_PRIZES = [
-  { name:"Prize A", description:"Description for Prize A", image:"https://via.placeholder.com/300?text=A" },
-  { name:"Prize B", description:"Description for Prize B", image:"https://via.placeholder.com/300?text=B" },
-  { name:"Prize C", description:"Description for Prize C", image:"https://via.placeholder.com/300?text=C" },
-  { name:"Prize D", description:"Description for Prize D", image:"https://via.placeholder.com/300?text=D" },
-  { name:"Prize E", description:"Description for Prize E", image:"https://via.placeholder.com/300?text=E" },
-  { name:"Prize F", description:"Description for Prize F", image:"https://via.placeholder.com/300?text=F" }
+  { name:"Prize A", description:"Gin Blending Class", image:"https://via.placeholder.com/300?text=A" },
+  { name:"Prize B", description:"High tea", image:"https://via.placeholder.com/300?text=B" },
+  { name:"Prize C", description:"Ironing Board Cover", image:"https://via.placeholder.com/300?text=C" },
+  { name:"Prize D", description:"Blanca Dinner", image:"https://via.placeholder.com/300?text=D" },
+  { name:"Prize E", description:"Pegs", image:"https://via.placeholder.com/300?text=E" },
+  { name:"Prize F", description:"Bottomless Brunch", image:"https://via.placeholder.com/300?text=F" }
 ];
 
 let prizes = JSON.parse(JSON.stringify(ORIGINAL_PRIZES));
