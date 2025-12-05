@@ -1,5 +1,5 @@
 # Merry-Christmas
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -14,7 +14,7 @@ html,body{
 /* Background */
 .background-container{
   position:fixed; inset:0;
-  background:url('https://cdn.stocksnap.io/img-thumbs/960w/christmas-garland_RFRZRPQQAI.jpg') no-repeat center center/cover;
+  background:url('https://via.placeholder.com/1600x900') no-repeat center center/cover;
   z-index:-2;
 }
 .background-overlay{
@@ -266,4 +266,5 @@ function easeOutCubic(t){ return (--t)*t*t + 1; }
 </script>
 </body>
 </html>
+
 
