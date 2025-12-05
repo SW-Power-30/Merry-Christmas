@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Roulette Spinner — Fixed Pointer Alignment</title>
+<title>Roulette Spinner — Accept Option</title>
 <style>
 html,body{
   margin:0; padding:0; height:100%; width:100%;
@@ -14,7 +14,7 @@ html,body{
 /* Background */
 .background-container{
   position:fixed; inset:0;
-  background:url('https://cdn.stocksnap.io/img-thumbs/960w/candy-canes_LCNYWW1NT6.jpg') no-repeat center center/cover;
+  background:url('https://via.placeholder.com/1600x900') no-repeat center center/cover;
   z-index:-2;
 }
 .background-overlay{
@@ -54,7 +54,7 @@ button{
   cursor:pointer;
 }
 
-#tryAgainBtn, #resetBtn {
+#tryAgainBtn, #resetBtn, #acceptBtn {
   display:none;
 }
 
@@ -92,6 +92,7 @@ button{
 
 <button id="spinBtn">SPIN</button>
 <button id="tryAgainBtn">TRY AGAIN</button>
+<button id="acceptBtn">ACCEPT</button>
 <button id="resetBtn">RESET</button>
 
 <div class="prize-popup" id="prizePopup">
@@ -124,10 +125,12 @@ const prizeImgEl = popup.querySelector(".prize-image");
 
 const spinBtn = document.getElementById("spinBtn");
 const tryAgainBtn = document.getElementById("tryAgainBtn");
+const acceptBtn = document.getElementById("acceptBtn");
 const resetBtn = document.getElementById("resetBtn");
 
 let currentRotation = 0;
 let spinCount = 0; // 0 = first spin, 1 = second spin
+let firstPrize = null;
 
 /* ---------- Responsive Canvas ---------- */
 function resizeCanvas(){
@@ -184,6 +187,7 @@ function spin(){
   popup.style.display = "none";
   spinBtn.disabled = true;
   tryAgainBtn.style.display = "none";
+  acceptBtn.style.display = "none";
   resetBtn.style.display = "none";
 
   const numWedgesNow = prizes.length;
@@ -214,12 +218,12 @@ function spin(){
       showPrize(selectedPrize);
 
       if(spinCount === 0){
-        // FIRST SPIN → remove selected prize
-        prizes.splice(chosenIndex, 1);
-        drawWheel();
+        // FIRST SPIN
+        firstPrize = selectedPrize;
         tryAgainBtn.style.display = "block";
+        acceptBtn.style.display = "block";
       } else {
-        // SECOND SPIN → do not remove prize
+        // SECOND SPIN
         resetBtn.style.display = "block";
       }
 
@@ -240,20 +244,39 @@ function showPrize(prize){
 }
 
 /* ---------- Buttons ---------- */
+
+// Try Again: remove first prize and allow second spin
 tryAgainBtn.addEventListener("click", () => {
   popup.style.display = "none";
   tryAgainBtn.style.display = "none";
+  acceptBtn.style.display = "none";
 
-  // RESET rotation for new wheel to align correctly
+  // Remove first prize
+  const index = prizes.findIndex(p => p.name === firstPrize.name);
+  if(index >= 0) prizes.splice(index, 1);
+
+  // Reset rotation for new wheel
   currentRotation = 0;
   canvas.style.transform = `rotate(0rad)`;
+  drawWheel();
 });
 
+// Accept: accept first prize, skip second spin
+acceptBtn.addEventListener("click", () => {
+  popup.style.display = "block"; // keep prize popup visible
+  tryAgainBtn.style.display = "none";
+  acceptBtn.style.display = "none";
+  resetBtn.style.display = "block";
+});
+
+// Reset: restore full wheel
 resetBtn.addEventListener("click", () => {
   prizes = JSON.parse(JSON.stringify(ORIGINAL_PRIZES));
   spinCount = 0;
+  firstPrize = null;
   popup.style.display = "none";
   tryAgainBtn.style.display = "none";
+  acceptBtn.style.display = "none";
   resetBtn.style.display = "none";
   currentRotation = 0;
   canvas.style.transform = "rotate(0rad)";
@@ -268,4 +291,5 @@ function easeOutCubic(t){ return (--t)*t*t + 1; }
 </script>
 </body>
 </html>
+
 
