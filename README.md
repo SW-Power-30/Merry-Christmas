@@ -9,7 +9,7 @@ html, body {
   padding:0; 
   font-family: Arial, Helvetica, sans-serif;
   /* Removed height:100% and overflow:hidden to allow scrolling */
-  background: #000;
+  /*background: #000;*/
 }
 
 /* Background */
@@ -49,6 +49,7 @@ canvas {
   height: 100%;
   border-radius: 50%;
   transform-origin: 50% 50%;
+  background: transparent;
 }
 
 .pointer {
