@@ -8,7 +8,7 @@
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        background-image: url('your-background.jpg');
+        background-image: url('https://cdn.stocksnap.io/img-thumbs/960w/wooden-wall_XQV3531O4I.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -117,8 +117,8 @@
 </head>
 <body>
 
-<div id="titleBox">Your Custom Title Here</div>
-<input type="text" id="titleInput" placeholder="Enter custom title...">
+<div id="titleBox">Game Time, Lets have fun to determine your present!</div>
+
 
 <div id="wheelContainer">
     <div id="pointer"></div>
