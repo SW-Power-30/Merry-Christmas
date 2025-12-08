@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -36,12 +36,18 @@ body {
     position: absolute;
     width: 0;
     height: 0;
-    border-left: 18px solid transparent;
-    border-right: 18px solid transparent;
-    border-bottom: 40px solid red;
+
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 60px solid red;
+
     top: 50%;
     left: 50%;
-    transform-origin: 50% 70px; 
+
+    /* FIX: true physical attachment to center */
+    transform: translate(-50%, -100%);
+    transform-origin: 50% 100%;
+
     pointer-events: none;
 }
 
@@ -82,7 +88,7 @@ let wheelCanvas = document.getElementById("wheelCanvas");
 let ctx = wheelCanvas.getContext("2d");
 let pointer = document.getElementById("pointer");
 
-let angle = 0; 
+let angle = 0;
 let spinning = false;
 let selectedPrize = null;
 
@@ -117,15 +123,13 @@ function spinWheel() {
     spinning = true;
 
     let total = prizes.length;
-    let arc = 360 / total;
+    let arcDeg = 360 / total;
 
     let index = Math.floor(Math.random() * total);
     selectedPrize = prizes[index];
 
-    let stopAngle = 360 - (index * arc + arc / 2);
-
+    let stopAngle = 360 - (index * arcDeg + arcDeg / 2);
     let finalAngle = stopAngle + 360 * 5;
-
     let duration = 3000;
     let start = null;
 
@@ -136,13 +140,17 @@ function spinWheel() {
         angle = easeOut(progress, 0, finalAngle, duration);
 
         wheelCanvas.style.transform = `rotate(${angle}deg)`;
-        pointer.style.transform = `rotate(${angle}deg)`; 
+        pointer.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;  // FIX
 
         if (progress < duration) {
             requestAnimationFrame(animate);
         } else {
             angle = finalAngle % 360;
             spinning = false;
+
+            wheelCanvas.style.transform = `rotate(${angle}deg)`;
+            pointer.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+
             document.getElementById("resultBox").textContent =
                 "You won: " + selectedPrize;
 
@@ -177,8 +185,6 @@ tryAgainBtn.onclick = () => {
     if (prizes.length === 1) {
         tryAgainBtn.style.display = "none";
     }
-
-    pointer.style.transform = `rotate(${angle}deg)`;
 };
 
 acceptBtn.onclick = () => {
@@ -191,7 +197,7 @@ resetBtn.onclick = () => {
     prizes = ["Prize A", "Prize B", "Prize C", "Prize D", "Prize E", "Prize F"];
     angle = 0;
     wheelCanvas.style.transform = "rotate(0deg)";
-    pointer.style.transform = "rotate(0deg)";
+    pointer.style.transform = "translate(-50%, -100%) rotate(0deg)";
     drawWheel();
 
     selectedPrize = null;
