@@ -116,12 +116,12 @@ button{
 <script>
 /* ---------- Original Prize List ---------- */
 const ORIGINAL_PRIZES = [
-  { name:"Prize A", description:"Gin Blending Class", image:"https://via.placeholder.com/300?text=A" },
-  { name:"Prize B", description:"High tea", image:"https://via.placeholder.com/300?text=B" },
-  { name:"Prize C", description:"Ironing Board Cover", image:"https://via.placeholder.com/300?text=C" },
-  { name:"Prize D", description:"Blanca Dinner", image:"https://via.placeholder.com/300?text=D" },
-  { name:"Prize E", description:"Pegs", image:"https://via.placeholder.com/300?text=E" },
-  { name:"Prize F", description:"Bottomless Brunch", image:"https://via.placeholder.com/300?text=F" }
+  { name:"Prize A", description:"Gin Blending Class - Enjoy a Gin class for 2 at Erp Distilery", image:"https://via.placeholder.com/300?text=A" },
+  { name:"Prize B", description:"Bottomless Brunch - Enjoy a sunday bottomless brunch at the venue of your choice Ginger Megs or Meantime", image:"https://via.placeholder.com/300?text=B" },
+  { name:"Prize C", description:"Ironing Board Cover - Enjoy a fresh new ironing board cover", image:"https://via.placeholder.com/300?text=C" },
+  { name:"Prize D", description:"Blanca indulgence - lets feast on the Marmaris set menu, wines and cocktails", image:"https://via.placeholder.com/300?text=D" },
+  { name:"Prize E", description:"New Pegs - The Peg basket is getting low so this should help", image:"https://via.placeholder.com/300?text=E" },
+  { name:"Prize F", description:"1hr Massage - Enjoy a relaxing 1hr full body massage at Endota Spa", image:"https://via.placeholder.com/300?text=F" }
 ];
 
 let prizes = JSON.parse(JSON.stringify(ORIGINAL_PRIZES));
