@@ -1,306 +1,311 @@
 
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Roulette Spinner — Conditional Spin</title>
+<meta charset="UTF-8">
+<title>Prize Wheel</title>
 <style>
-html,body{
-  margin:0; padding:0; height:100%; width:100%;
-  font-family:Arial,Helvetica,sans-serif; overflow:hidden;
-}
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-image: url('your-background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: scroll; /* allows page scrolling */
+    }
 
-/* Background */
-.background-container{
-  position:fixed; inset:0;
-  background:url('https://cdn.stocksnap.io/img-thumbs/960w/wooden-wall_XQV3531O4I.jpg') no-repeat center center/cover;
-  z-index:-2;
-}
-.background-overlay{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,0.4);
-  z-index:-1;
-}
+    #titleBox {
+        text-align: center;
+        font-size: 34px;
+        font-weight: bold;
+        color: white;
+        margin-top: 20px;
+        padding: 10px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    }
 
-/* Title Box */
-#titleBox {
-  text-align: center;
-  font-size: 32px;
-  font-weight: bold;
-  color: #ffffff;
-  margin-top: 20px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
+    #titleInput {
+        display: block;
+        margin: 10px auto 25px auto;
+        font-size: 18px;
+        padding: 6px 10px;
+        width: 60%;
+        text-align: center;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
 
-.spinner-container{
-  position:relative;
-  width:400px; height:400px;
-  margin:30px auto;
-}
+    #wheelContainer {
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 100px; /* allows room for popup visibility */
+    }
 
-canvas{
-  width:100%; height:100%;
-  border-radius:50%;
-  transform-origin:50% 50%;
-}
+    canvas {
+        margin-top: 20px;
+        max-width: 90vw;
+        height: auto;
+    }
 
-.pointer{
-  position:absolute;
-  left:50%; top:50%;
-  transform:translate(-50%,-190px);
-  width:0; height:0;
-  border-left:15px solid transparent;
-  border-right:15px solid transparent;
-  border-bottom:35px solid #e53935;
-  z-index:10;
-}
+    #pointer {
+        width: 0; 
+        height: 0; 
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 30px solid yellow;
+        margin: 0 auto 10px auto;
+    }
 
-button{
-  display:block;
-  margin:12px auto 0;
-  padding:12px 24px;
-  font-size:18px;
-  cursor:pointer;
-}
+    #controls {
+        text-align: center;
+        margin-top: 20px;
+    }
 
-#tryAgainBtn, #resetBtn, #acceptBtn {
-  display:none;
-}
+    button {
+        padding: 12px 22px;
+        font-size: 18px;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 8px;
+        border: none;
+        background-color: #444;
+        color: white;
+    }
 
-.prize-popup{
-  width:320px;
-  margin:18px auto;
-  padding:18px;
-  background:#ffd700;
-  border-radius:12px;
-  text-align:center;
-  display:none;
-  box-shadow:0 6px 20px rgba(0,0,0,0.25);
-}
+    button:hover {
+        background-color: #222;
+    }
 
-.prize-name{ font-size:20px; font-weight:700; }
-.prize-description{ margin-top:8px; font-size:15px; }
-.prize-popup img{ margin-top:12px; max-width:100%; border-radius:8px; }
+    /* Popup overlay background */
+    #popupBg {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(3px);
+        background: rgba(0,0,0,0.55);
+        z-index: 999;
+    }
 
-@media (max-width:520px){
-  .spinner-container{ width:300px; height:300px; }
-  .pointer{ transform:translate(-50%,-145px); }
-  .prize-popup{ width:90%; }
-}
+    /* Prize popup */
+    #popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 320px;
+        text-align: center;
+        z-index: 1000;
+        box-shadow: 0 0 18px rgba(0,0,0,0.4);
+    }
+
+    #popup h2 {
+        margin-top: 0;
+        color: #333;
+        font-size: 22px;
+    }
+
 </style>
 </head>
 <body>
 
-<!-- Title -->
-<div id="titleBox">Game Time, Lets have fun to determine your present!</div>
+<div id="titleBox">Your Custom Title Here</div>
+<input type="text" id="titleInput" placeholder="Enter custom title...">
 
-<div class="background-container"></div>
-<div class="background-overlay"></div>
-
-<div class="spinner-container">
-  <canvas id="spinner"></canvas>
-  <div class="pointer"></div>
+<div id="wheelContainer">
+    <div id="pointer"></div>
+    <canvas id="wheelCanvas" width="500" height="500"></canvas>
 </div>
 
-<button id="spinBtn">SPIN</button>
-<button id="tryAgainBtn">TRY AGAIN</button>
-<button id="acceptBtn">ACCEPT</button>
-<button id="resetBtn">RESET</button>
+<div id="controls">
+    <button id="spinBtn">SPIN</button>
+    <button id="tryAgainBtn" style="display:none;">TRY AGAIN</button>
+    <button id="acceptBtn" style="display:none;">ACCEPT PRIZE</button>
+    <button id="resetBtn" style="display:none;">RESET</button>
+</div>
 
-<div class="prize-popup" id="prizePopup">
-  <div class="prize-name"></div>
-  <div class="prize-description"></div>
-  <img class="prize-image" src="" alt="">
+<!-- Popup -->
+<div id="popupBg"></div>
+
+<div id="popup">
+    <h2 id="popupTitle"></h2>
+    <p id="popupDesc"></p>
+    <button id="closePopupBtn">Close</button>
 </div>
 
 <script>
-/* ---------- Original Prize List ---------- */
-const ORIGINAL_PRIZES = [
-  { name:"Prize A", description:"Gin Blending Class - Enjoy a Gin class for 2 at Erp Distilery", image:"https://via.placeholder.com/300?text=A" },
-  { name:"Prize B", description:"Bottomless Brunch - Enjoy a sunday bottomless brunch at the venue of your choice Ginger Megs or Meantime", image:"https://via.placeholder.com/300?text=B" },
-  { name:"Prize C", description:"Ironing Board Cover - Enjoy a fresh new ironing board cover", image:"https://via.placeholder.com/300?text=C" },
-  { name:"Prize D", description:"Blanca indulgence - lets feast on the Marmaris set menu, wines and cocktails", image:"https://via.placeholder.com/300?text=D" },
-  { name:"Prize E", description:"New Pegs - The Peg basket is getting low so this should help", image:"https://via.placeholder.com/300?text=E" },
-  { name:"Prize F", description:"1hr Massage - Enjoy a relaxing 1hr full body massage at Endota Spa", image:"https://via.placeholder.com/300?text=F" }
+/* --------------------- TITLE BOX BEHAVIOUR --------------------- */
+document.getElementById("titleInput").addEventListener("input", function () {
+    document.getElementById("titleBox").textContent = this.value;
+});
+
+/* --------------------- PRIZE SETUP --------------------- */
+let prizes = [
+    { text: "Prize 1", desc: "This is the detailed description for Prize 1." },
+    { text: "Prize 2", desc: "More details about Prize 2." },
+    { text: "Prize 3", desc: "This explains Prize 3 in detail." },
+    { text: "Prize 4", desc: "Prize 4 description info." },
+    { text: "Prize 5", desc: "Information about Prize 5." },
+    { text: "Prize 6", desc: "Prize 6 details displayed here." }
 ];
 
-let prizes = JSON.parse(JSON.stringify(ORIGINAL_PRIZES));
-const wedgeColors = ["#90EE90","#FF7F7F","#90EE90","#FF7F7F","#90EE90","#FF7F7F"];
+const colors = ["#90EE90", "#FF7F7F"];
 
-const canvas = document.getElementById("spinner");
+/* --------------------- CANVAS + WHEEL DRAW --------------------- */
+const canvas = document.getElementById("wheelCanvas");
 const ctx = canvas.getContext("2d");
-const container = document.querySelector(".spinner-container");
-const popup = document.getElementById("prizePopup");
-const prizeNameEl = popup.querySelector(".prize-name");
-const prizeDescEl = popup.querySelector(".prize-description");
-const prizeImgEl = popup.querySelector(".prize-image");
+let angle = 0;
+let spinning = false;
 
-const spinBtn = document.getElementById("spinBtn");
-const tryAgainBtn = document.getElementById("tryAgainBtn");
-const acceptBtn = document.getElementById("acceptBtn");
-const resetBtn = document.getElementById("resetBtn");
+function drawWheel() {
+    let num = prizes.length;
+    let arc = (2 * Math.PI) / num;
 
-let currentRotation = 0;
-let spinCount = 0; // 0 = first spin, 1 = second spin
-let firstPrize = null;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-/* ---------- Responsive Canvas ---------- */
-function resizeCanvas(){
-  const rect = container.getBoundingClientRect();
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  canvas.style.width = rect.width + "px";
-  canvas.style.height = rect.height + "px";
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  drawWheel();
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
+    for (let i = 0; i < num; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = colors[i % 2];
+        ctx.moveTo(250, 250);
 
-/* ---------- Draw Wheel ---------- */
-function drawWheel(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  const cssW = canvas.width / (window.devicePixelRatio||1);
-  const cssH = canvas.height / (window.devicePixelRatio||1);
-  const center = { x: cssW/2, y: cssH/2 };
-  const radius = Math.min(cssW, cssH)/2 - 6;
-  const numWedges = prizes.length;
-  const wedgeAngle = (2*Math.PI)/numWedges;
+        ctx.arc(250, 250, 240, arc * i + angle, arc * (i + 1) + angle);
+        ctx.fill();
+        ctx.save();
 
-  for(let i=0;i<numWedges;i++){
-    const start = i*wedgeAngle;
-    const end = start + wedgeAngle;
+        ctx.translate(250, 250);
+        ctx.rotate(arc * i + arc / 2 + angle);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "black";
+        ctx.font = "20px Arial";
+        ctx.fillText(prizes[i].text, 220, 10);
 
-    ctx.beginPath();
-    ctx.moveTo(center.x, center.y);
-    ctx.arc(center.x, center.y, radius, start, end);
-    ctx.closePath();
-    ctx.fillStyle = wedgeColors[i % wedgeColors.length];
-    ctx.fill();
-
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    ctx.save();
-    ctx.translate(center.x, center.y);
-    ctx.rotate(start + wedgeAngle/2);
-    ctx.textAlign = "right";
-    ctx.fillStyle = "#000";
-    ctx.font = `${Math.max(12, Math.floor(radius/6))}px Arial`;
-    ctx.fillText(prizes[i].name, radius - 18, 6);
-    ctx.restore();
-  }
-}
-
-/* ---------- Spin Function ---------- */
-function spin(){
-  popup.style.display = "none";
-  spinBtn.disabled = true;
-
-  const numWedgesNow = prizes.length;
-  const wedgeAngleNow = (2*Math.PI)/numWedgesNow;
-  const chosenIndex = Math.floor(Math.random()*numWedgesNow);
-
-  const extraSpins = Math.floor(Math.random()*3) + 4;
-  const wedgeCenter = chosenIndex * wedgeAngleNow + wedgeAngleNow/2;
-  const targetRotation = extraSpins*2*Math.PI + (-Math.PI/2 - wedgeCenter);
-
-  const startRotation = currentRotation;
-  const endRotation = currentRotation + targetRotation;
-
-  const duration = 4200;
-  const startTime = performance.now();
-
-  function animate(now){
-    const t = Math.min(1, (now-startTime)/duration);
-    const eased = easeOutCubic(t);
-    const rot = startRotation + (endRotation - startRotation)*eased;
-    canvas.style.transform = `rotate(${rot}rad)`;
-
-    if(t<1){
-      requestAnimationFrame(animate);
-    } else {
-      currentRotation = endRotation % (2*Math.PI);
-      const selectedPrize = prizes[chosenIndex];
-      showPrize(selectedPrize);
-
-      if(spinCount === 0){
-        // FIRST SPIN
-        firstPrize = selectedPrize;
-        tryAgainBtn.style.display = "block";
-        acceptBtn.style.display = "block";
-        spinBtn.style.display = "none"; // hide spin after first spin
-      } else {
-        // SECOND SPIN
-        resetBtn.style.display = "block";
-        spinBtn.style.display = "none"; // hide spin after second spin
-      }
-
-      spinCount++;
-      spinBtn.disabled = false;
+        ctx.restore();
     }
-  }
-  requestAnimationFrame(animate);
 }
 
-/* ---------- Show Prize ---------- */
-function showPrize(prize){
-  prizeNameEl.textContent = prize.name;
-  prizeDescEl.textContent = prize.description;
-  prizeImgEl.src = prize.image;
-  prizeImgEl.style.display = "block";
-  popup.style.display = "block";
+drawWheel();
+
+/* --------------------- SPIN LOGIC --------------------- */
+let spinBtn = document.getElementById("spinBtn");
+let tryAgainBtn = document.getElementById("tryAgainBtn");
+let acceptBtn = document.getElementById("acceptBtn");
+let resetBtn = document.getElementById("resetBtn");
+
+let selectedPrize = null;
+let spinCount = 0;
+
+spinBtn.onclick = () => spinWheel();
+
+function spinWheel() {
+    if (spinning || prizes.length === 0) return;
+
+    spinning = true;
+    spinBtn.style.display = "none";
+
+    let num = prizes.length;
+    let arc = (2 * Math.PI) / num;
+    let targetIndex = Math.floor(Math.random() * num);
+    selectedPrize = prizes[targetIndex];
+
+    let finalAngle = (Math.PI / 2) - (arc * targetIndex) + (2 * Math.PI * 5);
+
+    let duration = 3000;
+    let start = null;
+
+    function animate(timestamp) {
+        if (!start) start = timestamp;
+        let progress = timestamp - start;
+
+        angle = finalAngle * (progress / duration);
+
+        drawWheel();
+
+        if (progress < duration) {
+            requestAnimationFrame(animate);
+        } else {
+            angle = finalAngle;
+            drawWheel();
+            spinning = false;
+
+            showPopup(selectedPrize);
+
+            spinCount++;
+
+            if (spinCount === 1) {
+                tryAgainBtn.style.display = "inline-block";
+                acceptBtn.style.display = "inline-block";
+            } else {
+                resetBtn.style.display = "inline-block";
+            }
+        }
+    }
+    requestAnimationFrame(animate);
 }
 
-/* ---------- Buttons ---------- */
+/* --------------------- POPUP HANDLING --------------------- */
+function showPopup(prize) {
+    document.getElementById("popupTitle").textContent = prize.text;
+    document.getElementById("popupDesc").textContent = prize.desc;
 
-// Try Again: remove first prize and allow second spin
-tryAgainBtn.addEventListener("click", () => {
-  popup.style.display = "none";
-  tryAgainBtn.style.display = "none";
-  acceptBtn.style.display = "none";
+    document.getElementById("popupBg").style.display = "block";
+    document.getElementById("popup").style.display = "block";
+}
 
-  const index = prizes.findIndex(p => p.name === firstPrize.name);
-  if(index >= 0) prizes.splice(index, 1);
+document.getElementById("closePopupBtn").onclick = () => {
+    document.getElementById("popupBg").style.display = "none";
+    document.getElementById("popup").style.display = "none";
+};
 
-  currentRotation = 0;
-  canvas.style.transform = `rotate(0rad)`;
-  drawWheel();
+/* --------------------- BUTTON LOGIC --------------------- */
+tryAgainBtn.onclick = () => {
+    prizes = prizes.filter(p => p !== selectedPrize);
 
-  spinBtn.style.display = "block"; // show spin for second spin
-});
+    tryAgainBtn.style.display = "none";
+    acceptBtn.style.display = "none";
 
-// Accept: accept first prize, skip second spin
-acceptBtn.addEventListener("click", () => {
-  popup.style.display = "block";
-  tryAgainBtn.style.display = "none";
-  acceptBtn.style.display = "none";
-  resetBtn.style.display = "block";
-  spinBtn.style.display = "none";
-});
+    spinBtn.style.display = "inline-block";
 
-// Reset: restore full wheel
-resetBtn.addEventListener("click", () => {
-  prizes = JSON.parse(JSON.stringify(ORIGINAL_PRIZES));
-  spinCount = 0;
-  firstPrize = null;
-  popup.style.display = "none";
-  tryAgainBtn.style.display = "none";
-  acceptBtn.style.display = "none";
-  resetBtn.style.display = "none";
-  currentRotation = 0;
-  canvas.style.transform = "rotate(0rad)";
-  drawWheel();
+    document.getElementById("popupBg").style.display = "none";
+    document.getElementById("popup").style.display = "none";
 
-  spinBtn.style.display = "block"; // show spin after reset
-});
+    drawWheel();
+};
 
-spinBtn.addEventListener("click", spin);
+acceptBtn.onclick = () => {
+    tryAgainBtn.style.display = "none";
+    acceptBtn.style.display = "none";
+    resetBtn.style.display = "inline-block";
+};
 
-/* ---------- Easing ---------- */
-function easeOutCubic(t){ return (--t)*t*t + 1; }
+resetBtn.onclick = () => {
+    prizes = [
+        { text: "Prize 1", desc: "This is the detailed description for Prize 1." },
+        { text: "Prize 2", desc: "More details about Prize 2." },
+        { text: "Prize 3", desc: "This explains Prize 3 in detail." },
+        { text: "Prize 4", desc: "Prize 4 description info." },
+        { text: "Prize 5", desc: "Information about Prize 5." },
+        { text: "Prize 6", desc: "Prize 6 details displayed here." }
+    ];
+
+    spinCount = 0;
+    selectedPrize = null;
+
+    resetBtn.style.display = "none";
+    spinBtn.style.display = "inline-block";
+
+    document.getElementById("popupBg").style.display = "none";
+    document.getElementById("popup").style.display = "none";
+
+    drawWheel();
+};
 
 </script>
 </body>
