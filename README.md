@@ -115,8 +115,8 @@ button {
 </div>
 
 <button id="spinBtn">SPIN</button>
-<button id="tryAgainBtn">TRY AGAIN</button>
-<button id="acceptBtn">ACCEPT</button>
+<button id="acceptBtn">ACCEPT PRESENT</button>
+<button id="tryAgainBtn">DONT LIKE IT? TRY AGAIN</button>
 <button id="resetBtn">RESET</button>
 
 <div class="prize-popup" id="prizePopup">
