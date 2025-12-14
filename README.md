@@ -128,12 +128,12 @@ button {
 <script>
 /* ---------- Original Prize List ---------- */
 const ORIGINAL_PRIZES = [
-  { name:"Prize A", description:"Gin Blending Class - Enjoy a Gin class for 2 at Erp Distilery", image:"https://via.placeholder.com/300?text=A" },
-  { name:"Prize B", description:"Bottomless Brunch - Enjoy a sunday bottomless brunch at the venue of your choice Ginger Megs or Meantime", image:"https://via.placeholder.com/300?text=B" },
-  { name:"Prize C", description:"Ironing Board Cover - Enjoy a fresh new ironing board cover", image:"https://via.placeholder.com/300?text=C" },
-  { name:"Prize D", description:"Blanca indulgence - lets feast on the Marmaris set menu, wines and cocktails", image:"https://via.placeholder.com/300?text=D" },
-  { name:"Prize E", description:"New Pegs - The Peg basket is getting low so this should help", image:"https://via.placeholder.com/300?text=E" },
-  { name:"Prize F", description:"1hr Massage - Enjoy a relaxing 1hr full body massage at Endota Spa", image:"https://via.placeholder.com/300?text=F" }
+  { name:"Prize A", description:"Gin Blending Class - Enjoy a Gin class for 2 at Erp Distilery", image:"https://media-cdn.tripadvisor.com/media/attractions-splice-spp-720x480/0b/d9/da/b3.jpg" },
+  { name:"Prize B", description:"Bottomless Brunch - Enjoy a sunday bottomless brunch at the venue of your choice Ginger Megs or Meantime", image:"https://tse1.mm.bing.net/th/id/OIP.C7dCOydXP28oBUuZf0kEcQAAAA?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" },
+  { name:"Prize C", description:"Ironing Board Cover - Enjoy a fresh new ironing board cover", image:"https://images.pexels.com/photos/5202923/pexels-photo-5202923.jpeg?cs=srgb&dl=pexels-karolina-grabowska-5202923.jpg&fm=jpg" },
+  { name:"Prize D", description:"Blanca indulgence - lets feast on the Marmaris set menu, wines and cocktails", image:"https://www.hunterhunter.com.au/media/b0vd5cxp/blanca-honeysuckle-newcastle-nsw-49.jpg?mode=max&width=801&height=1201" },
+  { name:"Prize E", description:"New Pegs - The Peg basket is getting low so this should help", image:"https://www.austockphoto.com.au/imgcache/uploads/photos/compressed/clothes-pegs-holding-laundry-on-a-line-austockphoto-000008195.jpg?v=1.3.5" },
+  { name:"Prize F", description:"1hr Massage - Enjoy a relaxing 1hr full body massage at Endota Spa", image:"https://endotaspa.com.au/media/spalocator/images/media/2237/front-of-spa-1.jpg" }
 ];
 
 let prizes = JSON.parse(JSON.stringify(ORIGINAL_PRIZES));
